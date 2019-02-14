@@ -10,6 +10,7 @@ use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
 use app\models\EntryForm;
+use app\models\ValidarFormulario;
 
 class SiteController extends Controller
 {
@@ -151,16 +152,38 @@ class SiteController extends Controller
             return $this->render('entry', ['model' => $model]);
         }
     }
-    public function actionFormulario($mensaje)
+
+    //curso--------------------------------------------------------------->
+    public function actionFormulario($mensaje = null)
     {
+        // renderisamos a la vista 
         return $this->render("formulario", ['mensaje'=> $mensaje ]);
     }
 
     public function actionRequest(){
+        // definimos si la variblae existe
         if (isset($_REQUEST["nombre"])) {
             $mensaje = "la vaina funciona al pelo:" . $_REQUEST["nombre"];
         }
+        // renderisamos a la vista 
         $this->redirect(["site/formulario", 'mensaje'=> $mensaje ]);
     } 
-
+    
+    public function actionValidarformulario(){
+        //instanciamos el modelo del formulario
+        $model = new ValidarFormulario;
+        //preguntamos si enviamos el formulario
+        if($model->load(Yii::$app->request->post())){
+            //validamos si los datos pasaron la validacion
+            if($model->validate()){
+                //eejemplo
+            }
+            else{
+                $model->getErrors();
+            }
+        }
+        // renderisamos a la vista 
+        return $this->render("validarformulario", ["model" => $model]);
+    }
+    
 }
