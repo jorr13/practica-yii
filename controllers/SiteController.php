@@ -187,6 +187,7 @@ class SiteController extends Controller
         // renderisamos a la vista 
         return $this->render("validarformulario", ["model" => $model]);
     }
+    
     public function actionValidarformularioajax(){
         $model= new ValidarFormularioAjax;
         $msg = null;
@@ -211,5 +212,10 @@ class SiteController extends Controller
         //renderisamos a la vista con el mensaje
         return $this->render("validarformularioajax", ['model' => $model, 'msg' => $msg]);
     }
-    
+
+    //crud------------------------------------>
+    public function actionCreate()
+    {
+       return $this->render("create");
+    }
 }
