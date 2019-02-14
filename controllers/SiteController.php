@@ -11,6 +11,8 @@ use app\models\LoginForm;
 use app\models\ContactForm;
 use app\models\EntryForm;
 use app\models\ValidarFormulario;
+use app\models\ValidarFormularioAjax;
+use yii\widgets\ActiveForm;
 
 class SiteController extends Controller
 {
@@ -184,6 +186,30 @@ class SiteController extends Controller
         }
         // renderisamos a la vista 
         return $this->render("validarformulario", ["model" => $model]);
+    }
+    public function actionValidarformularioajax(){
+        $model= new ValidarFormularioAjax;
+        $msg = null;
+        if ($model->load(Yii::$app->request->post()) && Yii::$app->request->isAjax){
+           Yii::$app->response->format= Response::FORMAT_JSON;
+           return ActiveForm::validate($model);
+        }
+        if ($model->load(Yii::$app->request->post())) {
+            if ($model->validate()) {
+                //consulta a bd si pasa el formulario
+                //imprimimos el mensaje
+                $msg="Los datos enviados son correctos";
+                //reiniciamos las variables
+                $model->nombre = null;
+                $model->email = null;
+            }
+            //sino tiramos el error
+            else{
+                $model->getErrors();
+            }
+        }
+        //renderisamos a la vista con el mensaje
+        return $this->render("validarformularioajax", ['model' => $model, 'msg' => $msg]);
     }
     
 }

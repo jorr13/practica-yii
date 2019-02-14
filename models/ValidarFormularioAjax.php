@@ -3,7 +3,7 @@
  use Yii;
  use yii\base\model; 
 
-/*class ValidarFormulario extends model{
+class ValidarFormularioAjax extends model{
     public $nombre;
     public $email;
 
@@ -30,4 +30,18 @@
             'email' => 'Email:',
         ];
     }
+    public function email_existe($attribute, $params)
+    {
+        $email = ["jerinson@gmail.com", "juan@gmail.com"];
+        foreach($email as $val){
+            if ($this->email == $val) {
+                $this->addError($attribute, "el email ingresado existe!!");
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
+    }
+
 }
