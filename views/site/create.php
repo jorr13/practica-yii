@@ -1,6 +1,7 @@
 <?php
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use yii\helpers\Url;
 ?>
 <h1>Vista crear</h1>
 <h3><?= $msg ?></h3>
@@ -10,6 +11,7 @@ use yii\widgets\ActiveForm;
 
 ]);
 ?>
+<a class="btn btn-default" style="margin-bottom:40px;" href="<?= Url::toRoute("site/index")?>">Listar alumnos</a>
 <div class="formgroup">
     <?= $form->field($model, "nombre")->input("text")?>
 </div>

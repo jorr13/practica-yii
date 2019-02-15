@@ -65,10 +65,6 @@ class SiteController extends Controller
      *
      * @return string
      */
-    public function actionIndex()
-    {
-        return $this->render('index');
-    }
 
     /**
      * Login action.
@@ -216,6 +212,7 @@ class SiteController extends Controller
     }
 
     //crud------------------------------------>
+    //crear
     public function actionCreate()
     {
         $model= new FormAlumnos;
@@ -246,5 +243,13 @@ class SiteController extends Controller
             }
         }
         return $this->render("create", ['model' => $model, 'msg' => $msg]);
+    }
+    public function actionIndex()
+    {
+        //instaciamos el model
+        $table = new Alumnos;
+        //traemos todo de la bd con la funcion find
+        $model = $table->find()->all();
+        return $this->render('index', ['model' => $model]);
     }
 }
